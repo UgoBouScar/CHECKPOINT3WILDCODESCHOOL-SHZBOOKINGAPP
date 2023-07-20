@@ -13,7 +13,7 @@ function OneArtist() {
 
   const getOneArtist = async () => {
     try {
-      const response = await connexion.get(`/artistes/${id}`);
+      const response = await connexion.get(`/artistes/${id}?_expand=styles`);
       setOneArtist(response);
     } catch (error) {
       console.error(error);
@@ -26,30 +26,31 @@ function OneArtist() {
 
   return (
     <div>
+      <Navbar />
       <div className="header">
         <Helmet>
           <title>Booking SHZ</title>
         </Helmet>
         <h2>{oneArtist.nom}</h2>
-        <h3>{oneArtist.style}</h3>
+        <h3>{oneArtist.nom_style}</h3>
       </div>
-
       {oneArtist.image && (
-        <div className="imginfo">
-          <Navbar />
+        <div className="imginfo flex items-start">
           <ImageCard
             cls="max-h-m max-w-m content-center"
             src={oneArtist.image}
             alt={oneArtist.name}
           />
-          <p>{oneArtist.biographie}</p>
-          {/* Utilisez Soundcloud pour afficher le widget SoundCloud */}
-          <Soundcloud artistId={id} />
-          <div>
-            <EmailForm />
+          <div className="ml-8">
+            <p>{oneArtist.biographie}</p>
           </div>
         </div>
       )}
+
+      <div className="flex flex-col ml-8">
+        <Soundcloud artistId={id} />
+        <EmailForm />
+      </div>
     </div>
   );
 }
