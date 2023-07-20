@@ -1,73 +1,94 @@
-import React, { useState } from "react";
-import { sendEmail } from "mailjet-sendemail";
+import React, { useState, useRef } from "react";
+import emailjs from "emailjs-com";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function EmailForm() {
-  const [recipient, setRecipient] = useState("");
-  const [subject, setSubject] = useState("");
-  const [body, setBody] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const form = useRef();
 
-  const handleSubmit = async (e) => {
+  const serviceId = "service_uxn08f7";
+  const templateId = "template_shz";
+  const userId = "U9P3r5Sja0wmCPm3r";
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const mailjetConfig = {
-      apiKey: "wéwé",
-      apiSecret: "wéwé",
-    };
-
-    const emailData = {
-      From: "Votre adresse e-mail",
-      To: recipient,
-      Subject: subject,
-      TextPart: body,
-    };
-
-    try {
-      await sendEmail(emailData, mailjetConfig);
-      toast.success("E-mail envoyé avec succès");
-      setRecipient("");
-      setSubject("");
-      setBody("");
-    } catch (error) {
-      toast.error("Erreur lors de l'envoi de l'e-mail");
-    }
+    emailjs
+      .sendForm(serviceId, templateId, form.current, userId)
+      .then(() => {
+        toast.success(`Merci ${name}, l'e-mail a été envoyé avec succès !`);
+        setName("");
+        setEmail("");
+        setMessage("");
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'envoi de l'e-mail:", error);
+        toast.error("Une erreur est survenue lors de l'envoi de l'e-mail.");
+      });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Votre mail:
-        <input
-          type="email"
-          value={recipient}
-          onChange={(e) => setRecipient(e.target.value)}
-          required
-        />
-      </label>
-
-      <label>
-        Artiste concerné:
-        <input
-          type="text"
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-          required
-        />
-      </label>
-
-      <label>
-        Description de l'événement:
-        <textarea
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          required
-        />
-      </label>
-
-      <button type="submit">Envoyer</button>
-      <ToastContainer />
-    </form>
+    <div className="contactForm" data-theme="light">
+      <div className="formContainer">
+        <h3>Contactez-nous</h3>
+        <form className="ContactForm" ref={form} onSubmit={handleSubmit}>
+          <div className="userNameEmail">
+            <div className="userInfo">
+              <input
+                className="inputFieldName"
+                type="text"
+                name="name"
+                value={name}
+                placeholder="Nom"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="userInfo">
+              <input
+                className="inputFieldEmail"
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="userInfo">
+            <textarea
+              className="inputField"
+              name="message"
+              id="message"
+              cols="30"
+              rows="4"
+              placeholder="Message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+          </div>
+          <div className="divSubmitButton">
+            <button type="submit" className="submitButton">
+              Envoyer
+            </button>
+          </div>
+        </form>
+      </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={6000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </div>
   );
 }
 
