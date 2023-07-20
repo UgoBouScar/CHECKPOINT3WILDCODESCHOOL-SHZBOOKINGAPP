@@ -2,12 +2,13 @@ import React from "react";
 
 function Soundcloud({ artistId }) {
   const widgetUrl = {
-    1: 390403389,
-    2: 390403389,
-    3: 390403389,
-    4: 390403389,
+    1: 1005447433,
+    2: 1362970390,
+    3: 1403382670,
+    4: 1347344791,
     5: 1390403389,
-    6: 390403389,
+    6: 1466012584,
+    7: 1401170020,
   };
 
   const trackTitle = `Soundcloud Widget for Artist ${artistId}`;
