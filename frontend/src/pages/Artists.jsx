@@ -36,7 +36,7 @@ function Artistes() {
       </Helmet>
       <div>
         <Navbar />
-        <div className="grid grid-cols-2 gap-60 pt-60 ">
+        <div className="grid grid-cols-2 gap-60 pt-60 animate-fade-in">
           {artistes.map((artiste, index) => (
             <div
               key={artiste.id}
