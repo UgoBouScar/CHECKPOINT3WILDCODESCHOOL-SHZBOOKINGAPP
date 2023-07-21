@@ -17,7 +17,7 @@ function NavBar() {
           <li>
             <Link
               to="/"
-              className="text-white font-bold px-4 py-2 border border-gray-300 rounded bg-black hover:bg-purple"
+              className="text-white font-bold px-4 py-2 border border-gray-300 rounded bg-black"
             >
               Home
             </Link>
@@ -25,7 +25,7 @@ function NavBar() {
           <li>
             <Link
               to="/artistes"
-              className="text-white font-bold px-4 py-2 border border-gray-300 rounded bg-black hover:bg-purple"
+              className="text-white font-bold px-4 py-2 border border-gray-300 rounded bg-black"
             >
               Artists
             </Link>
@@ -33,7 +33,7 @@ function NavBar() {
           <li>
             <Link
               to="/releases"
-              className="text-white font-bold px-4 py-2 border border-gray-300 rounded bg-black mr-60 hover:bg-purple"
+              className="text-white font-bold px-4 py-2 border border-gray-300 rounded bg-black mr-60"
             >
               Releases
             </Link>

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import connexion from "../services/connexion";
 import ImageCard from "../components/ImageCard";
 import Soundcloud from "../components/Soundcoud";
-import EmailForm from "../components/EmailForm";
 import Navbar from "../components/Navbar";
 import absbg from "../assets/absbg.jpg";
 
@@ -49,19 +48,28 @@ function OneArtist() {
               />
             </div>
             <div className="ml-8 pt-20 pb-20">
-              <div className="flex items-center">
-                <h2 className="text-white mr-2">{oneArtist.nom}</h2>
-                <h3 className="text-purple">{oneArtist.nom_style}</h3>
+              <div className="flex items-center ml-10">
+                <h2 className="text-white mr-10 ml-10">{oneArtist.nom}</h2>
+                <h3 className="text-purple mr-10">{oneArtist.nom_style}</h3>
+                <Link to={oneArtist.url} className="text-grey">
+                  Soundcloud Profile
+                </Link>
               </div>
               <br />
               <p className="text-white text-center">{oneArtist.biographie}</p>
             </div>
           </div>
         )}
-
         <div className="flex flex-col ">
           <Soundcloud artistId={id} />
-          <EmailForm />
+        </div>
+        <div>
+          <Link
+            to="/bookingform"
+            className="text-white hover:text-purple font-bold py-3 px-6 rounded-lg"
+          >
+            Book
+          </Link>
         </div>
       </div>
     </div>

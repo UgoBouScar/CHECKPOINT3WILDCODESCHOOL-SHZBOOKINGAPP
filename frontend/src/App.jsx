@@ -5,6 +5,7 @@ import Artistes from "./pages/Artists";
 import OneArtist from "./pages/OneArtist";
 import Releases from "./pages/Releases";
 import ArtisteManaging from "./pages/ArtisteManaging";
+import BookingSpace from "./pages/BookingSpace";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/artistes" element={<Artistes />} />
         <Route path="/artistes/:id" element={<OneArtist />} />
         <Route path="/releases" element={<Releases />} />
+        <Route path="/bookingform" element={<BookingSpace />} />
         <Route path="/admin" element={<ArtisteManaging />} />
       </Routes>
     </BrowserRouter>
