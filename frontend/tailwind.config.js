@@ -24,6 +24,10 @@ module.exports = {
     extend: {
       animation: {
         "background-shine": "background-shine 2s linear infinite",
+        "fade-in": "fade-in 3s ease-in",
+        "fade-inn": "fade-in 6s ease-in",
+        "fade-innn": "fade-in 9s ease-in",
+        "fade-in-left": "fade-in-left 3s ease-in",
       },
       keyframes: {
         "background-shine": {
@@ -32,6 +36,24 @@ module.exports = {
           },
           to: {
             backgroundPosition: "-200% 0",
+          },
+        },
+        "fade-in": {
+          "0%": {
+            opacity: 0,
+          },
+          "100%": {
+            opacity: 1,
+          },
+        },
+        "fade-in-left": {
+          "0%": {
+            opacity: 0,
+            transform: "translateX(-20px)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translateX(0)",
           },
         },
       },
