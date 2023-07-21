@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import absbg from "../assets/absbg.jpg";
 
@@ -17,10 +18,10 @@ function Home() {
         <div className="scroll-left animate-fade-in">
           <p className="text-center text-4xl mb-4">SHZ RECORDS</p>
           <p className="text-center text-2xl mb-4 pt-10">
-            is an independent label founded 8 years ago in the south of France.
-            It gathers young, talented artists passionate about cutting-edge
-            underground styles. Evolving with time, the label embraces new
-            captivating musical vibes.
+            SHZ RECORDS is an independent label founded 8 years ago in the south
+            of France. It gathers young, talented artists passionate about
+            cutting-edge underground styles. Evolving with time, the label
+            embraces new captivating musical vibes.
           </p>
         </div>
       </div>
@@ -32,6 +33,14 @@ function Home() {
           make its mark on the music scene by pushing the boundaries of
           creativity and propelling young talents towards promising horizons.
         </p>
+      </div>
+      <div className="flex justify-center mt-8 animate-fade-innn">
+        <Link
+          to="/artistes"
+          className="text-white hover:text-purple font-bold py-3 px-6 rounded-lg"
+        >
+          Découvrez nos artistes
+        </Link>
       </div>
     </div>
   );
