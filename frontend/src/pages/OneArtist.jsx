@@ -38,23 +38,23 @@ function OneArtist() {
         <Helmet>
           <title>Booking SHZ</title>
         </Helmet>
-        <div className="pt-40" />
+        <div className="pt-60" />
         {oneArtist.image && (
           <div className="imginfo flex items-start">
             <div className="h-full w-full">
               <ImageCard
-                cls="max-h-m content-center rounded-full"
+                cls="max-h-m content-center rounded-full pb-10"
                 src={oneArtist.image}
                 alt={oneArtist.name}
               />
             </div>
-            <div className="ml-8 pt-20">
+            <div className="ml-8 pt-20 pb-20">
               <div className="flex items-center">
                 <h2 className="text-white mr-2">{oneArtist.nom}</h2>
                 <h3 className="text-purple">{oneArtist.nom_style}</h3>
               </div>
               <br />
-              <p className="text-white">{oneArtist.biographie}</p>
+              <p className="text-white text-center">{oneArtist.biographie}</p>
             </div>
           </div>
         )}
