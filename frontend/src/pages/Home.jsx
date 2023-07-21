@@ -39,7 +39,7 @@ function Home() {
           to="/artistes"
           className="text-white hover:text-purple font-bold py-3 px-6 rounded-lg"
         >
-          Découvrez nos artistes
+          Discover our talents
         </Link>
       </div>
     </div>

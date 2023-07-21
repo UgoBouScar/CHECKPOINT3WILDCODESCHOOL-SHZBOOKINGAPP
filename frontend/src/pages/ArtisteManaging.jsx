@@ -5,9 +5,9 @@ import connexion from "../services/connexion";
 import "react-toastify/dist/ReactToastify.css";
 
 function ArtisteManaging() {
-  const [artistes, setArtistes] = useState([]); // Liste des artistes
+  const [artistes, setArtistes] = useState([]);
   const [artisteInfo, setArtisteInfo] = useState({
-    id: "", // Ajoutez un champ id pour stocker l'ID de l'artiste sélectionné
+    id: "",
     nom: "",
     nom_style: "",
     biographie: "",
@@ -30,11 +30,10 @@ function ArtisteManaging() {
           "Les données de l'artiste ont été mises à jour avec succès."
         );
       } else {
-        // Ajout d'un nouvel artiste
         await connexion.post("/artistes", artisteInfo);
         toast.success("Nouvel artiste ajouté avec succès.");
       }
-      // Réinitialiser le formulaire après la soumission
+
       setArtisteInfo({
         id: "",
         nom: "",
@@ -49,7 +48,6 @@ function ArtisteManaging() {
     }
   };
 
-  // Charger la liste des artistes au chargement de la page
   useEffect(() => {
     const loadArtistes = async () => {
       try {
@@ -62,7 +60,6 @@ function ArtisteManaging() {
     loadArtistes();
   }, []);
 
-  // Charger les données de l'artiste sélectionné (pour la mise à jour)
   useEffect(() => {
     const loadArtisteData = async () => {
       try {
@@ -70,7 +67,6 @@ function ArtisteManaging() {
           const response = await connexion.get(`/artistes/${artisteInfo.id}`);
           setArtisteInfo(response);
         } else {
-          // Si aucun artiste n'est sélectionné, réinitialiser le formulaire
           setArtisteInfo({
             id: "",
             nom: "",
