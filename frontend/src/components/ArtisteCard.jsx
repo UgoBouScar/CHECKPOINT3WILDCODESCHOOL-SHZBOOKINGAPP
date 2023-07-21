@@ -18,7 +18,11 @@ function ArtisteCard({ artiste }) {
       </div>
       <div className="info mt-2">
         <Link to={`/artistes/${id}`}>
-          <input type="button" value="More Info" className="text-gray" />
+          <input
+            type="button"
+            value="More Info"
+            className="text-gray hover:text-purple"
+          />
         </Link>
       </div>
     </div>
