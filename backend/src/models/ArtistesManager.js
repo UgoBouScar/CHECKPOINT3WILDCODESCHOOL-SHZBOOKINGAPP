@@ -1,6 +1,6 @@
 const AbstractManager = require("./AbstractManager");
 
-class artistesManager extends AbstractManager {
+class ArtistesManager extends AbstractManager {
   constructor() {
     super({ table: "artistes" });
   }
@@ -17,17 +17,28 @@ class artistesManager extends AbstractManager {
   }
 
   insert(artistes) {
-    return this.database.query(`insert into ${this.table} (title) values (?)`, [
-      artistes.title,
-    ]);
+    return this.database.query(
+      `insert into ${this.table} (nom, image, biographie, url) values (?, ?, ?, ?)`,
+      [artistes.nom, artistes.image, artistes.biographie, artistes.url]
+    );
   }
 
   update(artistes) {
     return this.database.query(
-      `update ${this.table} set title = ? where id = ?`,
-      [artistes.title, artistes.id]
+      `update ${this.table} set nom = ?, image = ?, biographie = ?, url = ? where id = ?`,
+      [
+        artistes.nom,
+        artistes.image,
+        artistes.biographie,
+        artistes.url,
+        artistes.id,
+      ]
     );
+  }
+
+  delete(id) {
+    return this.database.query(`delete from ${this.table} where id = ?`, [id]);
   }
 }
 
-module.exports = artistesManager;
+module.exports = ArtistesManager;
