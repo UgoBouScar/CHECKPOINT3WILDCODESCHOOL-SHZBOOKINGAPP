@@ -1,8 +1,29 @@
+const postFile = (url, form) => {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}${url}`, {
+    body: form,
+    method: "POST",
+    credentials: "include",
+  })
+    .then((res) => res.json())
+    .catch((err) => console.error(err));
+};
+
+const putFile = (url, form) => {
+  return fetch(`${import.meta.env.VITE_BACKEND_URL}${url}`, {
+    body: form,
+    method: "PUT",
+    credentials: "include",
+  })
+    .then((res) => res.json()) // Ajoutez la conversion en JSON pour récupérer la réponse du backend
+    .catch((err) => console.error(err));
+};
+
 const getData = (url) => {
   return fetch(`${import.meta.env.VITE_BACKEND_URL}${url}`)
     .then((res) => res.json())
     .catch((err) => console.error(err));
 };
+
 const postData = (path, data) => {
   return fetch(`${import.meta.env.VITE_BACKEND_URL}${path}`, {
     method: "POST",
@@ -40,6 +61,8 @@ const connexion = {
   post: (path, data) => postData(path, data),
   put: (url, body) => updateData(url, body),
   delete: (path) => deleteData(path),
+  postFile: (url, form) => postFile(url, form),
+  putFile: (url, form) => putFile(url, form),
 };
 
 export default connexion;

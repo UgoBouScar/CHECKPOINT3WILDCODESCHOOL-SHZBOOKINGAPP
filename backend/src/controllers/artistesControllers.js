@@ -52,12 +52,12 @@ const edit = (req, res) => {
 };
 
 const add = (req, res) => {
-  const artiste = req.body;
+  const artiste = JSON.parse(req.body.data);
 
   // TODO validations (length, format...)
 
   models.artistes
-    .insert(artiste)
+    .insert(artiste, req.file.filename)
     .then(([result]) => {
       res.location(`/artistes/${result.insertId}`).sendStatus(201);
     })
