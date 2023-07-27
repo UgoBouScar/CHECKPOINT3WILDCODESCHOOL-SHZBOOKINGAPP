@@ -16,10 +16,10 @@ class ArtistesManager extends AbstractManager {
     return this.database.query(`select * from  ${this.table}`);
   }
 
-  insert(artistes) {
+  insert(artiste, filename) {
     return this.database.query(
-      `insert into ${this.table} (nom, image, biographie, url) values (?, ?, ?, ?)`,
-      [artistes.nom, artistes.image, artistes.biographie, artistes.url]
+      `insert into ${this.table} (nom, image, biographie, url, style_id) values (?, ?, ?, ?, ?)`,
+      [artiste.nom, filename, artiste.biographie, artiste.url, artiste.style_id]
     );
   }
 

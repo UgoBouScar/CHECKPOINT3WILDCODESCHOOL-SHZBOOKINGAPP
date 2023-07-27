@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import NavBar from "../components/Navbar";
 import connexion from "../services/connexion";
 import "react-toastify/dist/ReactToastify.css";
 
+const artistModel = {
+  id: null,
+  nom: "",
+  style_id: null,
+  biographie: "",
+  url: "",
+};
+
 function ArtisteManaging() {
   const [artistes, setArtistes] = useState([]);
-  const [artisteInfo, setArtisteInfo] = useState({
-    id: "",
-    nom: "",
-    nom_style: "",
-    biographie: "",
-    image: "",
-    url: "",
-  });
+  const [styles, setStyles] = useState([]); // Nouvel état pour stocker les styles existants
+  const [artisteInfo, setArtisteInfo] = useState(artistModel);
+
+  const image = useRef(null);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -23,36 +27,57 @@ function ArtisteManaging() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      const formData = new FormData();
+      formData.append("image", image.current.files[0]);
+      formData.append("data", JSON.stringify(artisteInfo));
+
       if (artisteInfo.id) {
-        // Mise à jour de l'artiste
-        await connexion.put(`/artistes/${artisteInfo.id}`, artisteInfo);
+        await connexion.putFile(`/artistes/${artisteInfo.id}`, formData);
         toast.success(
           "Les données de l'artiste ont été mises à jour avec succès."
         );
       } else {
-        await connexion.post("/artistes", artisteInfo);
+        await connexion.postFile("/artistes", formData);
         toast.success("Nouvel artiste ajouté avec succès.");
       }
 
-      setArtisteInfo({
-        id: "",
-        nom: "",
-        nom_style: "",
-        biographie: "",
-        image: "",
-        url: "",
-      });
+      setArtisteInfo(artistModel);
+
+      image.current.value = null;
     } catch (error) {
       console.error(error);
       toast.error("Une erreur est survenue lors de la soumission des données.");
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      if (!artisteInfo.id) {
+        toast.error("Veuillez sélectionner un artiste à supprimer.");
+        return;
+      }
+
+      await connexion.delete(`/artistes/${artisteInfo.id}`);
+      toast.success("Artiste supprimé avec succès.");
+
+      setArtisteInfo();
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        "Une erreur est survenue lors de la suppression de l'artiste."
+      );
+    }
+  };
+
   useEffect(() => {
     const loadArtistes = async () => {
       try {
-        const response = await connexion.get("/artistes");
-        setArtistes(response);
+        const artistesResponse = await connexion.get("/artistes");
+        setArtistes(artistesResponse);
+
+        // Chargement des styles existants depuis le backend
+        const stylesResponse = await connexion.get("/styles");
+        setStyles(stylesResponse);
       } catch (error) {
         console.error(error);
       }
@@ -67,14 +92,7 @@ function ArtisteManaging() {
           const response = await connexion.get(`/artistes/${artisteInfo.id}`);
           setArtisteInfo(response);
         } else {
-          setArtisteInfo({
-            id: "",
-            nom: "",
-            nom_style: "",
-            biographie: "",
-            image: "",
-            url: "",
-          });
+          setArtisteInfo(artistModel);
         }
       } catch (error) {
         console.error(error);
@@ -133,16 +151,21 @@ function ArtisteManaging() {
               htmlFor="nom_style"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
-              Nom de style:
+              Choisir un style:
             </label>
-            <input
-              id="nom_style"
+            <select
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              name="nom_style"
-              value={artisteInfo.nom_style}
+              name="style_id"
+              value={artisteInfo.style_id}
               onChange={handleInputChange}
-            />
+            >
+              <option value="">Sélectionner un style</option>
+              {styles.map((style) => (
+                <option key={style.id} value={style.id}>
+                  {style.nom}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="mb-4">
             <label
@@ -171,7 +194,7 @@ function ArtisteManaging() {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="file"
               name="image"
-              onChange={handleInputChange}
+              ref={image}
             />
           </div>
           <div className="mb-4">
@@ -186,14 +209,22 @@ function ArtisteManaging() {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="text"
               name="url"
+              accept="jpg, png, jpeg"
               value={artisteInfo.url}
               onChange={handleInputChange}
             />
           </div>
           <div className="flex items-center justify-center">
             <button
+              className="bg-red hover:bg-red-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4"
+              onClick={handleDelete}
+              type="button"
+            >
+              Supprimer
+            </button>
+            <button
               className="bg-black hover:bg-purple text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
+              type="button"
             >
               Enregistrer
             </button>

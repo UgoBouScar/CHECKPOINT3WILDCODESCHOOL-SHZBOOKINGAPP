@@ -54,6 +54,12 @@ function OneArtist() {
                 <Link to={oneArtist.url} className="text-grey">
                   Soundcloud Profile
                 </Link>
+                <Link
+                  to="/bookingform"
+                  className="text-white hover:text-purple font-bold py-3 px-6 rounded-lg ml-5"
+                >
+                  Book
+                </Link>
               </div>
               <br />
               <p className="text-white text-center">{oneArtist.biographie}</p>
@@ -63,14 +69,7 @@ function OneArtist() {
         <div className="flex flex-col ">
           <Soundcloud artistId={id} />
         </div>
-        <div>
-          <Link
-            to="/bookingform"
-            className="text-white hover:text-purple font-bold py-3 px-6 rounded-lg"
-          >
-            Book
-          </Link>
-        </div>
+        <div />
       </div>
     </div>
   );

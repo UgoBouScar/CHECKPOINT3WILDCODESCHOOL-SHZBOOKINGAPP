@@ -30,12 +30,16 @@ pool.getConnection().catch(() => {
 const models = {};
 
 const ArtistesManager = require("./ArtistesManager");
+const StylesManager = require("./StylesManager");
 
 models.artistes = new ArtistesManager();
 models.artistes.setDatabase(pool);
 
+models.styles = new StylesManager();
+models.styles.setDatabase(pool);
+
 // bonus: use a proxy to personalize error message,
-// when asking for a non existing model
+// when asking for a non-existing model
 
 const handler = {
   get(obj, prop) {
